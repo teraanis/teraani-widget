@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  html, body {
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100%;
+  }
+
+  .section {
+    padding: 60px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: #c9a84c;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(28px, 4vw, 38px);
+    color: #0d1b2a;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+    color: #6b7a8d;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Grid de pacotes */
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+
+  .package-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 36px 32px;
+    border: 1px solid #e8edf3;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(13,27,42,0.06);
+  }
+
+  .package-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(13,27,42,0.12);
+  }
+
+  .package-card.featured {
+    background: linear-gradient(160deg, #0d1b2a 0%, #1a2e45 100%);
+    border-color: rgba(201,168,76,0.3);
+    box-shadow: 0 12px 48px rgba(13,27,42,0.25);
+  }
+
+  .package-card.featured:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(13,27,42,0.35);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #c9a84c, #e8c97a);
+    color: #0d1b2a;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 20px;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .package-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    background: rgba(201,168,76,0.1);
+  }
+
+  .package-card.featured .package-icon {
+    background: rgba(201,168,76,0.15);
+  }
+
+  .package-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0d1b2a;
+    margin-bottom: 6px;
+  }
+
+  .package-card.featured .package-name {
+    color: #fff;
+  }
+
+  .package-desc {
+    font-size: 13px;
+    color: #8a9bb0;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .package-card.featured .package-desc {
+    color: rgba(255,255,255,0.55);
+  }
+
+  .package-price {
+    margin-bottom: 24px;
+  }
+
+  .price-label {
+    font-size: 11px;
+    color: #8a9bb0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .package-card.featured .price-label {
+    color: rgba(255,255,255,0.4);
+  }
+
+  .price-value {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #0d1b2a;
+    line-height: 1;
+  }
+
+  .package-card.featured .price-value {
+    color: #e8c97a;
+  }
+
+  .price-note {
+    font-size: 11px;
+    color: #8a9bb0;
+    margin-top: 4px;
+  }
+
+  .package-card.featured .price-note {
+    color: rgba(255,255,255,0.35);
+  }
+
+  .package-features {
+    list-style: none;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .package-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    color: #4a5568;
+    line-height: 1.4;
+  }
+
+  .package-card.featured .package-features li {
+    color: rgba(255,255,255,0.75);
+  }
+
+  .feature-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .feature-check svg {
+    width: 10px;
+    height: 10px;
+    fill: #c9a84c;
+  }
+
+  .divider {
+    height: 1px;
+    background: #e8edf3;
+    margin-bottom: 24px;
+  }
+
+  .package-card.featured .divider {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .package-tax {
+    font-size: 12px;
+    color: #8a9bb0;
+    margin-bottom: 20px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-radius: 8px;
+    line-height: 1.4;
+  }
+
+  .package-card.featured .package-tax {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.45);
+  }
+
+  .btn-package {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    border: none;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    color: #0d1b2a;
+  }
+
+  .btn-outline:hover {
+    border-color: #c9a84c;
+    color: #c9a84c;
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, #c9a84c, #e8c97a);
+    color: #0d1b2a;
+    box-shadow: 0 6px 24px rgba(201,168,76,0.35);
+  }
+
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(201,168,76,0.5);
+  }
+
+  /* Nota de rodapé */
+  .footer-note {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #8a9bb0;
+    line-height: 1.6;
+  }
+
+  .footer-note strong {
+    color: #c9a84c;
+  }
+
+  @media (max-width: 768px) {
+    .packages-grid {
+      grid-template-columns: 1fr;
+    }
+    .section { padding: 40px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">Nossos Serviços</div>
+    <h2 class="section-title">Planos e Pacotes</h2>
+    <p class="section-subtitle">Assessoria completa para seu visto americano ou canadense. Escolha o plano ideal para o seu perfil.</p>
+  </div>
+
+  <div class="packages-grid">
+
+    <!-- Pacote 1 - DS-160 -->
+    <div class="package-card">
+      <div class="package-icon">📋</div>
+      <div class="package-name">DS-160 Assistido</div>
+      <div class="package-desc">Preenchimento completo do formulário DS-160 com revisão profissional.</div>
+      <div class="package-price">
+        <div class="price-label">Honorários a partir de</div>
+        <div class="price-value">R$ 297</div>
+        <div class="price-note">por pessoa • pagamento facilitado</div>
+      </div>
+      <div class="divider"></div>
+      <ul class="package-features">
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Preenchimento do formulário DS-160
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Revisão completa dos dados
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Geração da página de confirmação
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Suporte via WhatsApp
+        </li>
+      </ul>
+      <div class="package-tax">⚠️ Taxa consular do governo americano (aprox. R$ 1.050) não inclusa e paga diretamente ao consulado.</div>
+      <a class="btn-package btn-outline" href="https://teraanis.github.io/teraani-widget/" target="_blank">Solicitar agora</a>
+    </div>
+
+    <!-- Pacote 2 - Completo (DESTAQUE) -->
+    <div class="package-card featured">
+      <div class="popular-badge">⭐ Mais Escolhido</div>
+      <div class="package-icon">🇺🇸</div>
+      <div class="package-name">Visto Americano Completo</div>
+      <div class="package-desc">Assessoria completa do início ao fim para o visto B1/B2.</div>
+      <div class="package-price">
+        <div class="price-label">Honorários a partir de</div>
+        <div class="price-value">R$ 497</div>
+        <div class="price-note">por pessoa • parcelamento disponível</div>
+      </div>
+      <div class="divider"></div>
+      <ul class="package-features">
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Análise completa do perfil
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Preenchimento do DS-160
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Agendamento da entrevista
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Organização dos documentos
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Preparação para entrevista
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Acompanhamento até aprovação
+        </li>
+      </ul>
+      <div class="package-tax">⚠️ Taxa consular do governo americano (aprox. R$ 1.050) não inclusa e paga diretamente ao consulado.</div>
+      <a class="btn-package btn-gold" href="https://teraanis.github.io/teraani-widget/" target="_blank">Quero meu visto agora</a>
+    </div>
+
+    <!-- Pacote 3 - Canadense -->
+    <div class="package-card">
+      <div class="package-icon">🇨🇦</div>
+      <div class="package-name">Visto Canadense</div>
+      <div class="package-desc">Assessoria para vistos de turismo, trabalho ou estudo no Canadá.</div>
+      <div class="package-price">
+        <div class="price-label">Honorários a partir de</div>
+        <div class="price-value">R$ 397</div>
+        <div class="price-note">por pessoa • pagamento facilitado</div>
+      </div>
+      <div class="divider"></div>
+      <ul class="package-features">
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Análise do perfil e elegibilidade
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Preenchimento do formulário IMM
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Organização documental completa
+        </li>
+        <li>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+          Suporte até aprovação
+        </li>
+      </ul>
+      <div class="package-tax">⚠️ Taxa consular do governo canadense (aprox. CAD 100) não inclusa e paga diretamente ao consulado.</div>
+      <a class="btn-package btn-outline" href="https://teraanis.github.io/teraani-widget/" target="_blank">Solicitar agora</a>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    💬 Não sabe qual plano escolher? <strong>Fale com nossa IA agora</strong> — ela analisa seu perfil e indica a melhor opção gratuitamente.<br>
+    Todos os preços são referentes aos honorários de assessoria da Teraani Vistos. Taxas consulares são pagas diretamente ao governo.
+  </div>
+</div>
+
+</body>
+</html>
