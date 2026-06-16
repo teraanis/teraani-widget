@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100%;
+  }
+
+  .section {
+    padding: 60px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Cabeçalho */
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: #c9a84c;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(28px, 4vw, 38px);
+    color: #0d1b2a;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+    color: #6b7a8d;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Faixa de números — substitua pelos seus dados reais antes de publicar */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a2e45 100%);
+    border-radius: 16px;
+    padding: 32px 24px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    padding: 0 24px;
+    position: relative;
+  }
+
+  .stat-item + .stat-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 40px;
+    width: 1px;
+    background: rgba(201,168,76,0.25);
+  }
+
+  .stat-value {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #e8c97a;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Grid de depoimentos */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .testimonial-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    border: 1px solid #e8edf3;
+    box-shadow: 0 4px 20px rgba(13,27,42,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(13,27,42,0.1);
+  }
+
+  .stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 16px;
+  }
+
+  .star {
+    color: #c9a84c;
+    font-size: 16px;
+  }
+
+  .testimonial-text {
+    font-size: 14.5px;
+    color: #3a4a5c;
+    line-height: 1.7;
+    flex: 1;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testimonial-text::before {
+    content: '\201C';
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 48px;
+    color: rgba(201,168,76,0.2);
+    line-height: 0;
+    vertical-align: -18px;
+    margin-right: 4px;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid #eef1f5;
+    padding-top: 20px;
+  }
+
+  .author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0d1b2a, #1a2e45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .author-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0d1b2a;
+  }
+
+  .author-meta {
+    font-size: 12px;
+    color: #8a9bb0;
+    margin-top: 2px;
+  }
+
+  .verified-badge {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #c9a84c;
+    font-weight: 500;
+  }
+
+  .verified-badge svg {
+    width: 14px;
+    height: 14px;
+    fill: #c9a84c;
+  }
+
+  /* CTA final */
+  .cta-block {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.04));
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 16px;
+    padding: 40px 24px;
+  }
+
+  .cta-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    color: #0d1b2a;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .cta-subtitle {
+    font-size: 14px;
+    color: #6b7a8d;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+  }
+
+  .btn-cta-primary {
+    background: linear-gradient(135deg, #c9a84c, #e8c97a);
+    color: #0d1b2a;
+    box-shadow: 0 6px 24px rgba(201,168,76,0.35);
+  }
+
+  .btn-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(201,168,76,0.5);
+  }
+
+  .btn-cta-secondary {
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    color: #0d1b2a;
+  }
+
+  .btn-cta-secondary:hover {
+    border-color: #c9a84c;
+    color: #c9a84c;
+  }
+
+  @media (max-width: 768px) {
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .stats-bar { gap: 16px; padding: 24px 16px; }
+    .stat-item + .stat-item::before { display: none; }
+    .section { padding: 40px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">Depoimentos</div>
+    <h2 class="section-title">O que nossos clientes dizem</h2>
+    <p class="section-subtitle">Histórias reais de quem realizou o sonho de viajar com a ajuda da Teraani's Vistos.</p>
+  </div>
+
+  <!--
+    ATENÇÃO — substitua os números abaixo pelos seus dados REAIS antes de publicar.
+    Se ainda não tiver volume alto, apague esta faixa ou troque por frases qualitativas.
+  -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-value">200+</div>
+      <div class="stat-label">Vistos processados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">97%</div>
+      <div class="stat-label">Taxa de aprovação</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">5+</div>
+      <div class="stat-label">Anos de experiência</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">SP</div>
+      <div class="stat-label">Atendimento em São Paulo</div>
+    </div>
+  </div>
+
+  <!--
+    ATENÇÃO — substitua os três depoimentos abaixo por feedback verdadeiro de clientes.
+    Peça autorização ao cliente para usar nome e cidade antes de publicar.
+  -->
+  <div class="testimonials-grid">
+
+    <!-- Depoimento 1 -->
+    <div class="testimonial-card">
+      <div class="stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="testimonial-text">A equipe da Teraani's Vistos cuidou de tudo: DS-160, agendamento e me preparou para a entrevista. Aprovada na primeira tentativa! Não teria conseguido sem a ajuda deles.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">👩</div>
+        <div>
+          <div class="author-name">Maria S.</div>
+          <div class="author-meta">São Paulo, SP · Visto B1/B2</div>
+        </div>
+        <div class="verified-badge">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          Verificado
+        </div>
+      </div>
+    </div>
+
+    <!-- Depoimento 2 -->
+    <div class="testimonial-card">
+      <div class="stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="testimonial-text">Processo super tranquilo para toda a família — marido, eu e dois filhos. A Rosana foi atenciosa em cada etapa. Vale muito o investimento!</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">👨‍👩‍👧‍👦</div>
+        <div>
+          <div class="author-name">Família Oliveira</div>
+          <div class="author-meta">Campinas, SP · Plano Família</div>
+        </div>
+        <div class="verified-badge">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          Verificado
+        </div>
+      </div>
+    </div>
+
+    <!-- Depoimento 3 -->
+    <div class="testimonial-card">
+      <div class="stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="testimonial-text">Tentei preencher o DS-160 sozinho e me perdi na metade. A Teraani's Vistos resolveu tudo em menos de 24 horas. Atendimento rápido e muito profissional.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">👨</div>
+        <div>
+          <div class="author-name">Carlos M.</div>
+          <div class="author-meta">São Paulo, SP · Plano Essencial</div>
+        </div>
+        <div class="verified-badge">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          Verificado
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-title">Pronto para tirar seu visto?</div>
+    <p class="cta-subtitle">Entre em contato agora e receba orientação personalizada da nossa equipe.</p>
+    <div class="cta-buttons">
+      <a class="btn-cta btn-cta-primary" href="https://wa.me/5511963477348" target="_blank">
+        💬 Agendar pelo WhatsApp
+      </a>
+      <a class="btn-cta btn-cta-secondary" href="https://form.jotform.com/261153221453042" target="_blank">
+        📋 Formulário de Visto Americano
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
